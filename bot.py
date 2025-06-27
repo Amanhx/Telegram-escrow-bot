@@ -13,8 +13,8 @@ default_restriction = ChatPermissions(can_send_messages=False)
 full_permissions = ChatPermissions(
     can_send_messages=True,
     can_send_media_messages=True,
-    can_send_other_messages=False,
-    can_add_web_page_previews=False
+    can_send_other_messages=True,
+    can_add_web_page_previews=True
 )
 
 # ✅ /start command
@@ -25,7 +25,7 @@ def start(update: Update, context: CallbackContext):
 def new_member(update: Update, context: CallbackContext):
     for user in update.message.new_chat_members:
         context.bot.restrict_chat_member(
-            chat_id=MAIN_GROUP_ID,
+            chat_id=update.message.chat.id,
             user_id=user.id,
             permissions=default_restriction
         )
@@ -50,7 +50,7 @@ def verify(update: Update, context: CallbackContext):
             update.message.reply_text("✅ Verified! You can now chat.")
         else:
             update.message.reply_text("❌ Please join the Escrow group first.")
-    except:
+    except Exception as e:
         update.message.reply_text("❌ Could not verify. Make sure you've joined the Escrow group.")
 
 # 🚫 Auto-delete links in messages
@@ -58,7 +58,10 @@ def block_links(update: Update, context: CallbackContext):
     if update.message.entities:
         for entity in update.message.entities:
             if entity.type in ["url", "text_link"]:
-                update.message.delete()
+                try:
+                    update.message.delete()
+                except:
+                    pass
                 break
 
 # ✅ Bot starter
