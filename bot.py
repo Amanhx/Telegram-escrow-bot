@@ -1,7 +1,7 @@
 from telegram import Update, ChatPermissions, ParseMode
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
 
-# ✅ Tera Bot Token aur Group IDs
+# ✅ Hardcoded Bot Token aur Group IDs
 BOT_TOKEN = '7594065240:AAG18BJ3jixepKept3-mDJjcBtaV4LE71xg'
 MAIN_GROUP_ID = -1002342410399
 ESCROW_GROUP_ID = -1002899093990
